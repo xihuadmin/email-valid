@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjzc.manage.core.mapper.download.BusiDateMapper">
+
+	<resultMap id="busiDateResultMap" type="BusiDate">
+		<id column="busi_date" property="busiDate" typeHandler="com.zjzc.manage.core.mysql.DateTypeHandler"/>
+		<result column="is_active" 	property="isActive" />
+	</resultMap>
+
+	<select id="queryBusiDate"  resultMap="busiDateResultMap">
+		select busi_date,is_active ,create_date ,creator ,edit_date  ,editor ,is_del
+		from t_busi_date  where is_del = 0
+	</select>
+
+</mapper>

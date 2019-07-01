@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>定时任务系统</title>
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,300">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/theme.css">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/admin-forms.css">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/dataTables.bootstrap.css">
+    <link rel="icon" href="/img/favicon.ico" type="image/png">
+</head>
+
+<body class="profile-page external-page">
+<#include "skin.html" parse=false/>
+<!-- Start: Main -->
+<div id="main">
+    <#include "header.html" parse=false/>
+    <!-- Start: Sidebar -->
+    <aside id="sidebar_left" class="nano nano-primary">
+        <div class="nano-content">
+            <!--<#include "left_sftp.html" parse=false/>-->
+            <!-- sidebar menu -->
+            <ul class="nav sidebar-menu">
+                <li class="sidebar-label pt20">Menu</li>
+                <li class="active">
+                    <a href="/job/list">
+                        <span class="glyphicons glyphicons-list"></span>
+                        <span class="sidebar-title">定时任务</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/page/icons">
+                        <span class="glyphicons glyphicons-rabbit"></span>
+                        <span class="sidebar-title">UI模版</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-toggle-mini">
+                <a href="#">
+                    <span class="fa fa-sign-out"></span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Start: Content -->
+    <section id="content_wrapper">
+        <#include "topbar.html" parse=false/>
+        <!-- Begin: Content -->
+        <header id="topbar">
+            <div class="topbar-left">
+                <ol class="breadcrumb">
+                    <li class="crumb-trail">定时任务</li>
+                </ol>
+            </div>
+        </header>
+        <div id="content">
+            <div class="col-md-12">
+                <div class="panel panel-visible">
+                    <div class="panel-heading">
+                        <div class="panel-title hidden-xs">
+                            <span class="glyphicon glyphicon-tasks"></span>定时任务
+                        </div>
+                    </div>
+                    <div class="panel-body pn">
+                        <table class="table table-striped table-bordered table-hover" id="datatable"
+                               cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th width="4%">编号</th>
+                                <th width="12%">名称</th>
+                                <th width="8%">执行周期</th>
+                                <th width="6%">上次状态</th>
+                                <th width="8%">最后运行时间</th>
+                                <th width="8%">运行时长(ms)</th>
+                                <th width="8%">下次执行时间</th>
+                                <th width="6%">执行间隔</th>
+                                <th width="5%">失败数</th>
+                                <th width="6%">总执行数</th>
+                                <th width="6%">调度状态</th>
+                                <th width="7%">当前状态</th>
+                                <th width="9%">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list jobs?keys as key>
+                                <#if jobs[key].isRunning()>
+                                    <tr>
+                                        <#else>
+                                    <tr>
+                                </#if>
+                                <td style="vertical-align: middle;">${jobs[key].jobProxy.jobId}</td>
+                                <td style="vertical-align: middle;">
+                                    <a href="/job/log/${jobs[key].jobProxy.uuid!}/1">${jobs[key].jobProxy.name!}</a>
+                                </td>
+                                <td style="vertical-align: middle;">${jobs[key].jobProxy.cron!}</td>
+                                <td style="vertical-align: middle;">
+                                    <#if jobs[key].jobProxy.prevStatus! == '执行失败'>
+                                        <span class="text-red">${jobs[key].jobProxy.prevStatus!}</span>
+                                        <#else>
+                                            ${jobs[key].jobProxy.prevStatus!}
+                                    </#if>
+                                </td>
+                                <td style="vertical-align: middle;">${jobs[key].jobProxy.lastExecTime}</td>
+                                <td style="vertical-align: middle;">${jobs[key].jobProxy.prevTimespent}</td>
+                                <td style="vertical-align: middle;">${jobs[key].getNextDateTime()}</td>
+                                <td style="vertical-align: middle;">${jobs[key].getNextInterval()}</td>
+                                <td style="vertical-align: middle;">${jobs[key].jobProxy.failCount}</td>
+                                <td style="vertical-align: middle;">${jobs[key].jobProxy.count}</td>
+                                <td style="vertical-align: middle;">
+                                    <#if jobs[key].isRunning()>
+                                        运行中
+                                        <#else>
+                                            已停止
+                                    </#if>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    <#if jobs[key].jobProxy.currentStatus! == '执行失败'>
+                                        <span class="text-red">${jobs[key].jobProxy.currentStatus!}</span>
+                                        <#else>
+                                            ${jobs[key].jobProxy.currentStatus!}
+                                    </#if>
+                                </td>
+                                <td style="vertical-align: middle;">
+                                    <#if jobs[key].isRunning()>
+                                        <a class="jobStop" jobId="${key?substring(1)}" href="#">停止</a>
+                                        <#if jobs[key].jobProxy.currentStatus! != '正在执行'>
+                                            &nbsp;&nbsp;<a class="runJob" jobId="${key?substring(1)}" href="#">立即执行</a>
+                                        </#if>
+                                        <#else>
+                                            <a class="jobStart" jobId="${key?substring(1)}" href="#">启动</a>
+                                    </#if>
+                                </td>
+                                </tr>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End: Content -->
+    </section>
+</div>
+<!-- End: Main -->
+<!-- BEGIN: PAGE SCRIPTS -->
+
+<!-- jQuery -->
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-editable.min.js"></script>
+
+<!-- Theme Javascript -->
+<script type="text/javascript" src="/js/utility.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/demo.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var name = '${remoteUser}';
+        $("#admin_name").text(name);
+        "use strict";
+
+        // Init Theme Core
+        Core.init();
+
+        // Init Theme Core
+        Demo.init();
+
+        // Select all text in CSS Generate Modal
+        $('#modal-close').click(function (e) {
+            e.preventDefault();
+            $('.datatables-demo-modal').modal('toggle');
+        });
+
+        $('.datatables-demo-code').on('click', function () {
+            var modalContent = $(this).prev();
+            var modalContainer = $('.datatables-demo-modal').find('.modal-body')
+
+            // Empty Modal of Existing Content
+            modalContainer.empty();
+
+            // Clone Content and Place in Modal
+            modalContent.clone(modalContent).appendTo(modalContainer);
+
+            // Toggle Modal
+            $('.datatables-demo-modal').modal({
+                backdrop: 'static'
+            })
+        });
+        $('#datatable').dataTable({
+            "aoColumnDefs": [{
+                'bSortable': false
+            }],
+            "oLanguage": {
+                "oPaginate": {
+                    "sPrevious": "上一页",
+                    "sNext": "下一页"
+                },
+                "sInfo": "<span style='color: #4a89dc'>显示 _START_ - _END_ 总页数 _TOTAL_ 数据</span>",
+                "sLengthMenu": "每页 _MENU_ 数据",
+                "sSearch": "查询:"
+            },
+            "iDisplayLength": 15,
+            "aLengthMenu": [
+                [10, 15, 30, 50, 100, -1],
+                [10, 15, 30, 50, 100, "All"]
+            ],
+            "sDom": '<"dt-panelmenu clearfix"lfr>t<"dt-panelfooter clearfix"ip>',
+            "oTableTools": {
+                "sSwfPath": "/fonts/copy_csv_xls_pdf.swf"
+            }
+        });
+        $.fn.editable.defaults.mode = 'popup';
+        $('.xedit').editable();
+
+        $(".jobStop").click(function () {
+            if (confirm("确定要停止该任务")) {
+                $.post('/job/stop/' + $(this).attr('jobId'), {}, function (resp) {
+                    if (resp == '1') {
+                        window.location.reload();
+                    }
+                    else {
+                        alert('操作失败');
+                    }
+                });
+            }
+        });
+        $(".jobStart").click(function () {
+            if (confirm("确定要启动该任务")) {
+                $.post('/job/start/' + $(this).attr('jobId'), {}, function (resp) {
+                    if (resp == '1') {
+                        window.location.reload();
+                    }
+                    else {
+                        alert('操作失败');
+                    }
+                });
+            }
+        });
+        $(".runJob").click(function () {
+            if (confirm("确定要立即执行该任务")) {
+                $.post('/job/run/' + $(this).attr('jobId'), {}, function (resp) {
+                    if (resp == '1') {
+                        window.location.reload();
+                    }
+                    else {
+                        alert('操作失败');
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

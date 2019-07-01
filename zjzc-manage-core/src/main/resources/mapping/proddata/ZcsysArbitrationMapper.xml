@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zjzc.manage.core.mapper.proddata.ZcsysArbitrationMapper" >
+  <resultMap id="BaseResultMap" type="com.zjzc.manage.core.model.po.TblZcsysArbitrationPo" >
+
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="arbtr_code" property="arbtrCode" jdbcType="VARCHAR" />
+    <result column="client_casecode" property="clientCasecode" jdbcType="VARCHAR" />
+    <result column="client_prod_type" property="clientProdType" jdbcType="VARCHAR" />
+    <result column="client_company_code" property="clientCompanyCode" jdbcType="VARCHAR" />
+    <result column="client_company_subcode" property="clientCompanySubcode" jdbcType="VARCHAR" />
+    <result column="client_company_fullname" property="clientCompanyFullname" jdbcType="VARCHAR" />
+    <result column="client_company_address" property="clientCompanyAddress" jdbcType="VARCHAR" />
+    <result column="client_company_shortname" property="clientCompanyShortname" jdbcType="VARCHAR" />
+    <result column="trigger_arbtr_reason" property="triggerArbtrReason" jdbcType="VARCHAR" />
+    <result column="contract_amount" property="contractAmount" jdbcType="VARCHAR" />
+    <result column="loan_amount" property="loanAmount" jdbcType="VARCHAR" />
+    <result column="batch_flag" property="batchFlag" jdbcType="VARCHAR" />
+    <result column="contract_sign_ts" property="contractSignTs" jdbcType="VARCHAR" />
+    <result column="loan_apply_ts" property="loanApplyTs" jdbcType="VARCHAR" />
+    <result column="loan_start_ts" property="loanStartTs" jdbcType="VARCHAR" />
+    <result column="loan_end_ts" property="loanEndTs" jdbcType="VARCHAR" />
+    <result column="loan_period" property="loanPeriod" jdbcType="VARCHAR" />
+    <result column="loan_period_unit" property="loanPeriodUnit" jdbcType="VARCHAR" />
+    <result column="loan_interest_yearly" property="loanInterestYearly" jdbcType="VARCHAR" />
+    <result column="loan_penal_interest_daily" property="loanPenalInterestDaily" jdbcType="VARCHAR" />
+    <result column="loan_mortgage" property="loanMortgage" jdbcType="VARCHAR" />
+    <result column="loan_usage" property="loanUsage" jdbcType="VARCHAR" />
+    <result column="loan_ppl_name" property="loanPplName" jdbcType="VARCHAR" />
+    <result column="loan_ppl_sex" property="loanPplSex" jdbcType="VARCHAR" />
+    <result column="loan_ppl_nation" property="loanPplNation" jdbcType="VARCHAR" />
+    <result column="loan_ppl_id" property="loanPplId" jdbcType="VARCHAR" />
+    <result column="loan_ppl_address" property="loanPplAddress" jdbcType="VARCHAR" />
+    <result column="loan_ppl_phone" property="loanPplPhone" jdbcType="VARCHAR" />
+    <result column="loan_foreign_related" property="loanForeignRelated" jdbcType="VARCHAR" />
+    <result column="backup_field1" property="backupField1" jdbcType="VARCHAR" />
+    <result column="backup_field2" property="backupField2" jdbcType="VARCHAR" />
+    <result column="backup_field3" property="backupField3" jdbcType="VARCHAR" />
+    <result column="attachment" property="attachment" jdbcType="VARCHAR" />
+    <result column="attachment_path1" property="attachmentPath1" jdbcType="VARCHAR" />
+    <result column="attachment_path2" property="attachmentPath2" jdbcType="VARCHAR" />
+    <result column="paid_for_arbtr" property="paidForArbtr" jdbcType="VARCHAR" />
+    <result column="triggered_arbtr" property="triggeredArbtr" jdbcType="VARCHAR" />
+    <result column="rcd_created_ts" property="rcdCreatedTs" jdbcType="VARCHAR" />
+    <result column="last_upd_dt" property="lastUpdDt" jdbcType="VARCHAR" />
+    <result column="last_upd_usr" property="lastUpdUsr" jdbcType="VARCHAR" />
+    <result column="send_type" property="sendType" jdbcType="VARCHAR" />
+    <result column="email_address" property="emailAddress" jdbcType="VARCHAR" />
+    <result column="physical_address" property="physicalAddress" jdbcType="VARCHAR" />
+    <result column="package_name" property="packageName" jdbcType="VARCHAR" />
+    <result column="loan_credit_code" property="loanCreditCode" jdbcType="VARCHAR" />
+    <result column="loan_company_type" property="loanCompanyType" jdbcType="VARCHAR" />
+    <result column="loan_company_corporation" property="loanCompanyCorporation" jdbcType="VARCHAR" />
+    <result column="loan_company_phone_no" property="loanCompanyPhoneNo" jdbcType="VARCHAR" />
+    <result column="loan_company_address" property="loanCompanyAddress" jdbcType="VARCHAR" />
+    <result column="loan_company_name" property="loanCompanyName" jdbcType="VARCHAR" />
+    <result column="upload_oss_time" property="uploadOssTime" jdbcType="VARCHAR" />
+    <result column="loan_is_company" property="loanIsCompany" jdbcType="VARCHAR" />
+    <result column="off_line_time" property="offLineTime" jdbcType="VARCHAR" />
+    <result column="del_casefile_time" property="delCasefileTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zjzc.manage.core.model.po.TblZcsysArbitrationPo" extends="BaseResultMap" >
+    <result column="records" property="records" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, arbtr_code, client_casecode, client_prod_type, client_company_code, client_company_subcode,
+    client_company_fullname, client_company_address, client_company_shortname, trigger_arbtr_reason, 
+    contract_amount, loan_amount, batch_flag, contract_sign_ts, loan_apply_ts, loan_start_ts, 
+    loan_end_ts, loan_period, loan_period_unit, loan_interest_yearly, loan_penal_interest_daily, 
+    loan_mortgage, loan_usage, loan_ppl_name, loan_ppl_sex, loan_ppl_nation, loan_ppl_id, 
+    loan_ppl_address, loan_ppl_phone, loan_foreign_related, backup_field1, backup_field2, 
+    backup_field3, attachment, attachment_path1, attachment_path2, paid_for_arbtr, triggered_arbtr, 
+    rcd_created_ts, last_upd_dt, last_upd_usr, send_type, email_address, physical_address, 
+    package_name, loan_credit_code, loan_company_type, loan_company_corporation, loan_company_phone_no, 
+    loan_company_address, loan_company_name, upload_oss_time, loan_is_company, off_line_time, 
+    del_casefile_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    records
+  </sql>
+  <select id="selectZcsysArbitrationByProd" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zcsys_arbitration
+    where DATE_FORMAT(upload_oss_time, '%Y-%m-%d') = #{version}
+  </select>
+
+  <insert id="insert" parameterType="com.zjzc.manage.core.model.po.TblZcsysArbitrationPo" >
+    insert into zcsys_arbitration (id, arbtr_code, client_casecode,
+      client_prod_type, client_company_code, client_company_subcode, 
+      client_company_fullname, client_company_address, 
+      client_company_shortname, trigger_arbtr_reason, 
+      contract_amount, loan_amount, batch_flag, 
+      contract_sign_ts, loan_apply_ts, loan_start_ts, 
+      loan_end_ts, loan_period, loan_period_unit, 
+      loan_interest_yearly, loan_penal_interest_daily, 
+      loan_mortgage, loan_usage, loan_ppl_name, 
+      loan_ppl_sex, loan_ppl_nation, loan_ppl_id, 
+      loan_ppl_address, loan_ppl_phone, loan_foreign_related, 
+      backup_field1, backup_field2, backup_field3, 
+      attachment, attachment_path1, attachment_path2, 
+      paid_for_arbtr, triggered_arbtr, rcd_created_ts, 
+      last_upd_dt, last_upd_usr, send_type, 
+      email_address, physical_address, package_name, 
+      loan_credit_code, loan_company_type, loan_company_corporation, 
+      loan_company_phone_no, loan_company_address, 
+      loan_company_name, upload_oss_time, loan_is_company, 
+      off_line_time, del_casefile_time, records
+      )
+    values (#{id,jdbcType=INTEGER}, #{arbtrCode,jdbcType=VARCHAR}, #{clientCasecode,jdbcType=VARCHAR}, 
+      #{clientProdType,jdbcType=VARCHAR}, #{clientCompanyCode,jdbcType=VARCHAR}, #{clientCompanySubcode,jdbcType=VARCHAR}, 
+      #{clientCompanyFullname,jdbcType=VARCHAR}, #{clientCompanyAddress,jdbcType=VARCHAR}, 
+      #{clientCompanyShortname,jdbcType=VARCHAR}, #{triggerArbtrReason,jdbcType=VARCHAR}, 
+      #{contractAmount,jdbcType=VARCHAR}, #{loanAmount,jdbcType=VARCHAR}, #{batchFlag,jdbcType=VARCHAR}, 
+      #{contractSignTs,jdbcType=VARCHAR}, #{loanApplyTs,jdbcType=VARCHAR}, #{loanStartTs,jdbcType=VARCHAR}, 
+      #{loanEndTs,jdbcType=VARCHAR}, #{loanPeriod,jdbcType=VARCHAR}, #{loanPeriodUnit,jdbcType=VARCHAR}, 
+      #{loanInterestYearly,jdbcType=VARCHAR}, #{loanPenalInterestDaily,jdbcType=VARCHAR}, 
+      #{loanMortgage,jdbcType=VARCHAR}, #{loanUsage,jdbcType=VARCHAR}, #{loanPplName,jdbcType=VARCHAR}, 
+      #{loanPplSex,jdbcType=VARCHAR}, #{loanPplNation,jdbcType=VARCHAR}, #{loanPplId,jdbcType=VARCHAR}, 
+      #{loanPplAddress,jdbcType=VARCHAR}, #{loanPplPhone,jdbcType=VARCHAR}, #{loanForeignRelated,jdbcType=VARCHAR}, 
+      #{backupField1,jdbcType=VARCHAR}, #{backupField2,jdbcType=VARCHAR}, #{backupField3,jdbcType=VARCHAR}, 
+      #{attachment,jdbcType=VARCHAR}, #{attachmentPath1,jdbcType=VARCHAR}, #{attachmentPath2,jdbcType=VARCHAR}, 
+      #{paidForArbtr,jdbcType=VARCHAR}, #{triggeredArbtr,jdbcType=VARCHAR}, #{rcdCreatedTs,jdbcType=VARCHAR}, 
+      #{lastUpdDt,jdbcType=VARCHAR}, #{lastUpdUsr,jdbcType=VARCHAR}, #{sendType,jdbcType=VARCHAR}, 
+      #{emailAddress,jdbcType=VARCHAR}, #{physicalAddress,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, 
+      #{loanCreditCode,jdbcType=VARCHAR}, #{loanCompanyType,jdbcType=VARCHAR}, #{loanCompanyCorporation,jdbcType=VARCHAR}, 
+      #{loanCompanyPhoneNo,jdbcType=VARCHAR}, #{loanCompanyAddress,jdbcType=VARCHAR}, 
+      #{loanCompanyName,jdbcType=VARCHAR}, #{uploadOssTime,jdbcType=VARCHAR}, #{loanIsCompany,jdbcType=VARCHAR}, 
+      #{offLineTime,jdbcType=VARCHAR}, #{delCasefileTime,jdbcType=VARCHAR}, #{records,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+</mapper>

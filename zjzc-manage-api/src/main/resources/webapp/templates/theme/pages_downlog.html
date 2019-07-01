@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>湛仲数据管理平台</title>
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,300">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/theme.css">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/admin-forms.css">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/dataTables.bootstrap.css">
+    <link rel="icon" href="/img/favicon.ico" type="image/png">
+</head>
+
+<body class="profile-page external-page">
+<#include "skin.html" parse=false/>
+<!-- Start: Main -->
+<div id="main">
+    <#include "header.html" parse=false/>
+    <!-- Start: Sidebar -->
+    <aside id="sidebar_left" class="nano nano-primary">
+        <div class="nano-content">
+            <#include "left_sftp.html" parse=false/>
+            <!-- sidebar menu -->
+            <ul class="nav sidebar-menu">
+                <li class="sidebar-label pt20">Menu</li>
+                <li>
+                    <a href="/page/index">
+                        <span class="glyphicons glyphicons-home"></span>
+                        <span class="sidebar-title">主页</span>
+                    </a>
+                </li>
+                <!--<li>
+                    <a class="topbar-menu-toggle" href="#">
+                        <span class="glyphicons glyphicons-magic fs16"></span>
+                        <span class="sidebar-title">存管报备</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="sidebar-menu-toggle" href="#">
+                        <span class="octicon octicon-ruby fs18"></span>
+                        <span class="sidebar-title">SFTP文件</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/system/page/uploadlog">
+                        <span class="glyphicons glyphicons-stopwatch"></span>
+                        <span class="sidebar-title">上传记录</span>
+                    </a>
+                </li>-->
+                <li class="active">
+                    <a href="/system/page/downlog">
+                        <span class="glyphicons glyphicons-table"></span>
+                        <span class="sidebar-title">下载记录</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/job/list">
+                        <span class="glyphicons glyphicons-list"></span>
+                        <span class="sidebar-title">定时任务</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/page/icons">
+                        <span class="glyphicons glyphicons-rabbit"></span>
+                        <span class="sidebar-title">UI模版</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-toggle-mini">
+                <a href="#">
+                    <span class="fa fa-sign-out"></span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Start: Content -->
+    <section id="content_wrapper">
+        <#include "topbar.html" parse=false/>
+        <!-- Begin: Content -->
+        <header id="topbar">
+            <div class="topbar-left">
+                <ol class="breadcrumb">
+                    <li class="crumb-icon">
+                        <a href="/page/index">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                    </li>
+                    <li class="crumb-link">
+                        <a href="/page/index">Home</a>
+                    </li>
+                    <li class="crumb-trail">下载记录</li>
+                </ol>
+            </div>
+        </header>
+        <div id="content">
+                <div class="col-md-12">
+                    <div class="panel panel-visible">
+                        <div class="panel-heading">
+                            <div class="panel-title hidden-xs">
+                                <span class="glyphicon glyphicon-tasks"></span>下载记录
+                            </div>
+                        </div>
+                        <div class="admin-form" style="margin: 20px 20px;">
+                            <form method="post" action="/system/page/downlog">
+                                <div class="section mt25">
+                                    <label for="version" class="field prepend-icon" style="width: 180px">
+                                        <input type="text" name="version" id="version" class="gui-input"
+                                               placeholder="日期标识" value="${itemInfo.version!}">
+                                        <label for="version" class="field-icon"><i class="fa fa-calendar"></i>
+                                        </label>
+                                    </label>
+                                    <label for="code" class="field prepend-icon" style="width: 180px">
+                                        <input type="text" name="code" id="code" class="gui-input"
+                                               placeholder="企业编码" value="${itemInfo.code!}">
+                                        <label for="code" class="field-icon"><i class="fa fa-stack-exchange"></i>
+                                        </label>
+                                    </label>
+                                    <label for="arbtrCode" class="field prepend-icon" style="width: 180px">
+                                        <input type="text" name="arbtrCode" id="arbtrCode" class="gui-input"
+                                               placeholder="立案编号" value="${itemInfo.arbtrCode!}">
+                                        <label for="arbtrCode" class="field-icon"><i class="fa fa-lock"></i>
+                                        </label>
+                                    </label>
+                                    <button type="submit" class="button btn-primary mr10" style="border-radius: 5px;margin-left: 20px;">查询</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel-body pn">
+                            <table class="table table-striped table-bordered table-hover" id="datatable"
+                                   cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>立案编号</th>
+                                    <th>文件名称</th>
+                                    <th>公司名称</th>
+                                    <th>文件大小</th>
+                                    <th>文件类型</th>
+                                    <th>下载状态</th>
+                                    <th>版本标识</th>
+                                    <th>下载时间</th>
+                                    <th>添加时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <#list page as file>
+                                        <tr>
+                                            <td>${file.arbtrCode!}</td>
+                                            <td><a href="/system/uploadAllFile?filePath=${file.savePath!}/${file.filename!}&fileName=${file.filename!}">
+                                                ${file.filename!}</a></td>
+                                            <td>${file.code!}</td>
+                                            <td>${file.fileSize!}</td>
+                                            <td>${file.type!}</td>
+                                            <td>${file.downloadTypeDesc!}</td>
+                                            <td>${file.version!}</td>
+                                            <td>${file.downloadTime!}</td>
+                                            <td>${file.createTime!}</td>
+                                        </tr>
+                                    </#list>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- End: Content -->
+    </section>
+</div>
+<!-- End: Main -->
+
+<!-- BEGIN: PAGE SCRIPTS -->
+
+<!-- jQuery -->
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="/js/dataTables.tableTools.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-editable.min.js"></script>
+<!-- Theme Javascript -->
+<script type="text/javascript" src="/js/utility.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/demo.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var name = '${remoteUser}';
+        $("#admin_name").text(name);
+        "use strict";
+
+        // Init Theme Core
+        Core.init();
+
+        // Init Theme Core
+        Demo.init();
+        // Init Highlight.js Plugin
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+
+        // Select all text in CSS Generate Modal
+        $('#modal-close').click(function(e) {
+            e.preventDefault();
+            $('.datatables-demo-modal').modal('toggle');
+        });
+
+        $('.datatables-demo-code').on('click', function() {
+            var modalContent = $(this).prev();
+            var modalContainer = $('.datatables-demo-modal').find('.modal-body')
+
+            // Empty Modal of Existing Content
+            modalContainer.empty();
+
+            // Clone Content and Place in Modal
+            modalContent.clone(modalContent).appendTo(modalContainer);
+
+            // Toggle Modal
+            $('.datatables-demo-modal').modal({
+                backdrop: 'static'
+            })
+        });
+        $('#datatable').dataTable({
+            "aoColumnDefs": [{
+                'bSortable': false
+            }],
+            "order": [
+                [8, 'asc']
+            ],
+            "oLanguage": {
+                "oPaginate": {
+                    "sPrevious": "上一页",
+                    "sNext": "下一页"
+                },
+                "sInfo":"<span style='color: #4a89dc'>显示 _START_ - _END_ 总页数 _TOTAL_ 数据</span>",
+                "sLengthMenu":"每页 _MENU_ 数据",
+                "sSearch": "查询:"
+            },
+            "iDisplayLength": 15,
+            "aLengthMenu": [
+                [10, 15, 30, 50, 100, -1],
+                [10, 15, 30, 50, 100, "All"]
+            ],
+            "sDom": '<"dt-panelmenu clearfix"lfr>t<"dt-panelfooter clearfix"ip>',
+            "oTableTools": {
+                "sSwfPath": "/fonts/copy_csv_xls_pdf.swf"
+            }
+        });
+        $.fn.editable.defaults.mode = 'popup';
+        $('.xedit').editable();
+    });
+</script>
+</body>
+</html>

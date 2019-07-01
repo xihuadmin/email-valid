@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjzc.manage.core.mapper.download.ZcsysDownloadMapper">
+
+	<insert id="insertDownloadByList" parameterType="java.util.List">
+		INSERT INTO t_zcsys_download_log (
+			download_path,save_path,`status`,create_time,`code`,version,arbtr_code,type,filename
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index" open=""
+				 close="" separator=",">
+			(
+			#{item.downloadPath},#{item.savePath},0,NOW(),#{item.code},#{item.version},#{item.arbtrCode},#{item.type},#{item.filename}
+			)
+		</foreach>
+	</insert>
+
+	<select id="findDownloadByList" resultType="TblZcsysDownloadPo" parameterType="java.util.Map">
+		SELECT download_path downloadPath,save_path savePath,id,arbtr_code arbtrCode,
+				type,code,version,filename,create_time createTime,download_time downloadTime,status,filesize
+		FROM t_zcsys_download_log
+		<where>
+			<if test="status != null and status != ''">
+				AND status = #{status}
+			</if>
+			<if test="num != null and num != ''">
+				AND id%10 = #{num}
+			</if>
+			<if test="arbtrCode != null and arbtrCode != ''">
+				AND arbtr_code = #{arbtrCode}
+			</if>
+			<if test="version != null and version != ''">
+				AND version = #{version}
+			</if>
+			<if test="code != null and code != ''">
+				AND code = #{code}
+			</if>
+		</where>
+		ORDER BY arbtr_code ASC
+		<if test="limit != null">
+			LIMIT #{limit}
+		</if>
+	</select>
+
+	<update id="updateDownloadById" parameterType="TblZcsysDownloadPo">
+		UPDATE t_zcsys_download_log
+		<set>
+			<if test="status != null and status != ''">
+				status = #{status},
+			</if>
+			<if test="fileSize !=null and fileSize != ''">
+				filesize = #{fileSize},
+			</if>
+			download_time = NOW()
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<insert id="insertDownloadIsDel" parameterType="TblZcsysDownloadPo">
+		INSERT INTO t_zcsys_download_isdel
+		SELECT * FROM t_zcsys_download_log WHERE id = #{id}
+	</insert>
+	<delete id="delDownloadById" parameterType="TblZcsysDownloadPo">
+		DELETE FROM t_zcsys_download_log WHERE id = #{id}
+	</delete>
+
+	<select id="findTotalDownloadOk" resultType="java.lang.Integer">
+		SELECT count(1) FROM t_zcsys_download_log WHERE status = 0 AND version = #{version}
+	</select>
+</mapper>

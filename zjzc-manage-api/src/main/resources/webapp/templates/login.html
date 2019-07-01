@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <title>登录</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/assest/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/assest/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/assest/css/hzed.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assest/js/pages/login/EasePack.min.js"></script>
+    <script type="text/javascript" src="/assest/js/pages/login/TweenLite.min.js"></script>
+    <script type="text/javascript" src="/assest/js/pages/login/login.js"></script>
+    <link rel="icon" href="/img/favicon.ico" type="image/png">
+    <!-- Theme Javascript -->
+    <script type="text/javascript" src="/assest/js/utility/utility.js"></script>
+    <script type="text/javascript" src="/assest/js/main.js"></script>
+    <script type="text/javascript" src="/assest/js/demo.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            "use strict";
+            // Init Theme Core
+            Core.init();
+            // Init Demo JS
+            Demo.init();
+            // Init CanvasBG and pass target starting location
+            CanvasBG.init({
+                Loc: {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 3.3
+                },
+            });
+        });
+    </script>
+</head>
+<body class="external-page">
+<div id="main" class="animated fadeIn">
+    <section id="content_wrapper">
+        <!-- begin canvas animation bg -->
+        <div id="canvas-wrapper">
+            <canvas id="demo-canvas"></canvas>
+        </div>
+        <!-- Begin: Content -->
+        <section id="content">
+            <form id="loginForm" class="form-signin" action="/login" method="post">
+                <label class="input-label" for="username">登录名</label>
+                <input type="text" id="username" name="username" class="input-block-level required">
+                <label class="input-label" for="password">密码</label>
+                <input type="password" id="password" name="password" class="input-block-level required">
+
+                <input class="btn btn-large btn-info" type="submit" value="登 录"/>&nbsp;&nbsp;
+            </form>
+        </section>
+    </section>
+</div>
+</body>
+</html>

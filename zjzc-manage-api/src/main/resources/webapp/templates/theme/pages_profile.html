@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>存管报备</title>
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,300">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/theme.css">
+    <!-- Plugin CSS  -->
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/fullcalendar.min.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/admin-forms.css">
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/adminmodal.css">
+    <link href="/css/main.css" rel="stylesheet" />
+    <link rel="icon" href="/img/favicon.ico" type="image/png">
+</head>
+
+<body class="profile-page external-page">
+    <#include "skin.html" parse=false/>
+<!-- Start: Main -->
+<div id="main">
+    <#include "header.html" parse=false/>
+    <!-- Start: Sidebar -->
+    <aside id="sidebar_left" class="nano nano-primary">
+        <div class="nano-content">
+            <#include "left_sftp.html" parse=false/>
+            <!-- sidebar menu -->
+            <ul class="nav sidebar-menu">
+                <li class="sidebar-label pt20">Menu</li>
+                <li class="active">
+                    <a href="/page/index">
+                        <span class="glyphicons glyphicons-home"></span>
+                        <span class="sidebar-title">主页</span>
+                    </a>
+                </li>
+                <#if remoteUser! == 'admin'>
+                    <li>
+                        <a href="/system/page/downlog">
+                            <span class="glyphicons glyphicons-table"></span>
+                            <span class="sidebar-title">下载记录</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/job/list">
+                            <span class="glyphicons glyphicons-list"></span>
+                            <span class="sidebar-title">定时任务</span>
+                        </a>
+                    </li>
+                </#if>
+                <li>
+                    <a href="/page/icons">
+                        <span class="glyphicons glyphicons-rabbit"></span>
+                        <span class="sidebar-title">UI模版 </span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-toggle-mini">
+                <a href="#">
+                    <span class="fa fa-sign-out"></span>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Start: Content -->
+    <section id="content_wrapper">
+        <#include "topbar.html" parse=false/>
+        <!-- Begin: Content -->
+        <!-- Start: Topbar -->
+        <header id="topbar">
+            <div class="topbar-left">
+                <ol class="breadcrumb">
+                    <li class="crumb-icon">
+                        <a href="/page/index">
+                            <span class="glyphicon glyphicon-home"></span>
+                        </a>
+                    </li>
+                    <li class="crumb-link">
+                        <a href="/page/index">Home</a>
+                    </li>
+                    <li class="crumb-trail">主页</li>
+                </ol>
+            </div>
+        </header>
+        <!-- End: Topbar -->
+        <section id="content" style="background: url(/assest/img/1.jpg) repeat top center; width: 100%;">
+            <div class="row mb10">
+                <div class="col-md-3">
+                    <div class="panel panel-tile bg-success light of-h mb10">
+                        <div class="panel-body pn pl20 p5">
+                            <div class="icon-bg"> <i class="fa fa-envelope"></i> </div>
+                            <h2 class="mt15 lh15"> <b>${TotalMap['hisThreeDay_val']}</b> </h2>
+                            <h5 class="text-muted">${TotalMap['hisThreeDay']}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-tile bg-primary light of-h mb10">
+                        <div class="panel-body pn pl20 p5">
+                            <div class="icon-bg"> <i class="fa fa-foursquare"></i> </div>
+                            <h2 class="mt15 lh15"> <b>${TotalMap['hisTwoDay_val']}</b> </h2>
+                            <h5 class="text-muted">${TotalMap['hisTwoDay']}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-tile bg-alert light of-h mb10">
+                        <div class="panel-body pn pl20 p5">
+                            <div class="icon-bg"> <i class="fa fa-comments-o"></i> </div>
+                            <h2 class="mt15 lh15"> <b>${TotalMap['hisOneDay_val']}</b> </h2>
+                            <h5 class="text-muted">${TotalMap['hisOneDay']}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-tile bg-info light of-h mb10">
+                        <div class="panel-body pn pl20 p5">
+                            <div class="icon-bg"> <i class="fa fa-envelope"></i> </div>
+                            <h2 class="mt15 lh15"> <b>${TotalMap['today_val']}</b> </h2>
+                            <h5 class="text-muted">${TotalMap['today']}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="admin-form theme-info" >
+                <div id="counter"></div>
+            </div>
+            <!-- end: .tray-left -->
+
+            <!-- begin: .tray-center -->
+            <div class="tray tray-center p10 va-t">
+                <!-- Calendar  -->
+                <div id='calendar' class="admin-theme"></div>
+            </div>
+            <!-- end: .tray-center -->
+        </section>
+        <!-- End: Content-Wrapper -->
+        <!-- End: Content -->
+    </section>
+</div>
+<!-- End: Main -->
+
+<!-- BEGIN: PAGE SCRIPTS -->
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.plugin.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.countdown.min.js"></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+
+    <!-- Admin Forms Javascript -->
+    <script type="text/javascript" src="/js/jquery-tcm-month.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-timepicker.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-touch-punch.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.spectrum.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.stepper.min.js"></script>
+
+    <!-- Page Plugins -->
+    <script type="text/javascript" src="/js/jquery.magnific-popup.js"></script>
+
+    <!-- FullCalendar Plugin -->
+    <script src='/js/moment.min.js'></script>
+    <script src='/js/fullcalendar.min.js'></script>
+    <!-- Theme Javascript -->
+    <script type="text/javascript" src="/js/utility.js"></script>
+    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/demo.js"></script>
+
+    <script type="text/javascript">
+    jQuery(document).ready(function () {
+
+        var name = '${remoteUser}';
+        $("#admin_name").text(name);
+        "use strict";
+
+        // Init Theme Core
+        Core.init();
+
+        // Init Theme Core
+        Demo.init();
+
+        var newYear = new Date();
+        newYear = new Date(newYear.getFullYear() + 1, 1 - 1, 1);
+        $('#counter').countdown({
+            until: newYear
+        });
+        var Calendar = $('#calendar');
+        var Picker = $('.inline-mp');
+
+        // Init FullCalendar Plugin
+        Calendar.fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            editable: true,
+            viewRender: function(view) {
+                // If monthpicker has been init update its date on change
+                if (Picker.hasClass('hasMonthpicker')) {
+                    var selectedDate = Calendar.fullCalendar('getDate');
+                    var formatted = moment(selectedDate, 'YYYY-MM-DD').format('MM/YY');
+                    Picker.monthpicker("setDate", formatted);
+                }
+                // Update mini calendar title
+                var titleContainer = $('.fc-title-clone');
+                if (!titleContainer.length) {
+                    return;
+                }
+                titleContainer.html(view.title);
+            },
+            droppable: true, // this allows things to be dropped onto the calendar
+            drop: function() {
+                // is the "remove after drop" checkbox checked?
+                if (!$(this).hasClass('event-recurring')) {
+                    $(this).remove();
+                }
+            },
+            eventRender: function(event, element) {
+                // create event tooltip using bootstrap tooltips
+                $(element).attr("data-original-title", event.title);
+                $(element).tooltip({
+                    container: 'body',
+                    delay: {
+                        "show": 100,
+                        "hide": 200
+                    }
+                });
+                // create a tooltip auto close timer
+                $(element).on('show.bs.tooltip', function() {
+                    var autoClose = setTimeout(function() {
+                        $('.tooltip').fadeOut();
+                    }, 3500);
+                });
+            }
+        });
+
+        // Init MonthPicker Plugin and Link to Calendar
+        Picker.monthpicker({
+            showButtonPanel: false,
+            onSelect: function(selectedDate) {
+                var formatted = moment(selectedDate, 'MM/YYYY').format('MM/DD/YYYY');
+                Calendar.fullCalendar('gotoDate', formatted)
+            }
+        });
+    });
+</script>
+</body>
+</html>

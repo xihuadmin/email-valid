@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <title>消息通知</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/theme.css">
+    <!-- Plugin CSS  -->
+    <link rel="stylesheet" type="text/css" href="/assest/css/page/admin-forms.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/assest/js/pages/login/EasePack.min.js"></script>
+    <script type="text/javascript" src="/assest/js/pages/login/TweenLite.min.js"></script>
+    <script type="text/javascript" src="/assest/js/pages/login/login.js"></script>
+    <link rel="icon" href="/img/favicon.ico" type="image/png">
+    <!-- Theme Javascript -->
+    <script type="text/javascript" src="/assest/js/utility/utility.js"></script>
+    <script type="text/javascript" src="/assest/js/main.js"></script>
+    <script type="text/javascript" src="/assest/js/demo.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            "use strict";
+            // Init Theme Core
+            Core.init();
+            // Init Demo JS
+            Demo.init();
+            // Init CanvasBG and pass target starting location
+            CanvasBG.init({
+                Loc: {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 3.3
+                },
+            });
+        });
+    </script>
+</head>
+<body class="external-page sb-l-c sb-r-c">
+
+<!-- Start: Main -->
+<div id="main" class="animated fadeIn" style="background: url(/assest/img/1.jpg) repeat top center; width: 100%;">
+
+    <!-- Start: Content -->
+    <section id="content_wrapper">
+
+        <!-- begin canvas animation bg -->
+        <div id="canvas-wrapper">
+            <canvas id="demo-canvas"></canvas>
+        </div>
+
+        <!-- Begin: Content -->
+        <section id="content">
+
+            <div class="admin-form theme-info mw600" style="margin-top: 14%;" id="login1">
+                <div class="row mb15 table-layout">
+
+                    <div class="col-xs-6 va-m pln">
+                        <div class="login-links">
+                            <a href="#" class="" title="False Credentials">返回结果</a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 text-right va-b pr5">
+                    </div>
+                </div>
+                <div class="panel panel-info mv10 heading-border br-n">
+                    <div class="panel-body bg-light pn">
+
+                        <div class="row table-layout">
+                            <div class="col-xs-3 p20 pv15 va-m br-r bg-light">
+                                <img class="br-a bw4 br-grey img-responsive center-block" src="/img/stock/5.jpg" title="AdminDesigns Logo">
+                            </div>
+                            <div class="col-xs-9 p20 pv15 va-m bg-light">
+                                <h3 class="mb5"><b> ${message!} </b></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end .form-body section -->
+                    <div class="panel-footer clearfix p10 ph15">
+                        <a href="javascript: history.go(-1)" class="btn btn-primary btn-lg pull-right"><i class="en-arrow-left8"></i> 返回</a>
+                        <label class="switch block switch-primary pull-left input-align mt10">
+                            <span style="font-size: 16px;"><label id="timeNum">5</label> 秒后自动返回</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- End: Content -->
+
+    </section>
+    <!-- End: Content-Wrapper -->
+</div>
+</body>
+<script>
+    $(document).ready(function (){
+        function jump(count) {
+            window.setTimeout(function(){
+                count--;
+                if(count > 0) {
+                    $('#timeNum').text(count);
+                    jump(count);
+                } else {
+                    history.go(-1);
+                }
+            }, 1000);
+        }
+        jump(5);
+    });
+</script>
+</html>

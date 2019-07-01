@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>合纵e贷存管报备系统</title>
+    <style>
+        body {
+            background: #75b9e6;
+            color: #ffffff;
+        }
+
+        .btn-success {
+            color: #ffffff;
+            background-color: #71d398;
+            border-color: #71d398;
+        }
+
+        .form-control {
+            margin-top: 5px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555555;
+            background-color: #ffffff;
+            background-image: none;
+            border: 1px solid #e7e7e2;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            margin-bottom: 0;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            white-space: nowrap;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            border-radius: 4px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .login-page {
+            margin: 1% auto 0 auto;
+            position: relative;
+            width: 1600px;
+        }
+
+        .panel {
+            position: relative;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            border: 0;
+            box-shadow: none;
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        table > thead > tr > th {
+            padding: 10px;
+            line-height: 1.42857143;
+            border: 1px solid #e4e9eb;
+        }
+
+        table > tbody > tr > td {
+            padding: 10px;
+            line-height: 1.42857143;
+            border: 1px solid #e4e9eb;
+        }
+
+        .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th {
+            background-color: #45b9e0;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="login-page">
+    <div class="form-group">
+        <form action="/uploadPage" method="post">
+            <div class="form-group">
+                <label>日期(yyyyMMdd格式)：</label>
+                <input type="text" name="version" class="form-control" value="${version!}"/>
+                <button class="btn btn-success pull-right" type="submit">查询</button>
+                <a href="/hello" class="btn btn-success pull-right">返回</a>
+            </div>
+        </form>
+        <div class="panel">
+            <table class="panel-heading table-striped">
+                <thead>
+                <tr>
+                    <th>文件名</th>
+                    <th>回盘文件名</th>
+                    <th>编号</th>
+                    <th>上传时间</th>
+                    <th>回盘状态</th>
+                    <th>文件类型</th>
+                    <th>版本标识</th>
+                    <th>修改时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list list as file>
+                    <tr>
+                        <td><a href="/system/uploadFile?fileName=${file.fileName}">${file.fileName}</a></td>
+                        <td><a href="/system/uploadFile?fileName=${file.returnFileName}">${file.returnFileName}</a></td>
+                        <td>${file.num}</td>
+                        <td>${file.addTimeStr}</td>
+                        <td>${file.returnFlagStr}</td>
+                        <td>${file.typeStr}</td>
+                        <td>${file.version}</td>
+                        <td>${file.updateTimeStr}</td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

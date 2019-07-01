@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjzc.manage.core.mapper.zjzcsys.ZjzcsysAribMapper">
+
+    <select id="selectCaseIdBybatch" resultType="com.zjzc.manage.core.model.CaseBatchInfo">
+        SELECT b.id caseId,b.arbitration_amount amount,b.compute_price price,s.json_msg msg from
+            case_batch_info b
+            INNER JOIN case_batch_supplement s on b.id = s.case_id
+            where b.arbitration_amount = b.compute_price
+    </select>
+
+
+    <select id="updateCaseBatchByAmount" parameterType="com.zjzc.manage.core.model.CaseBatchInfo">
+        UPDATE case_batch_info
+        SET compute_price = #{price}
+        where id = #{caseId}
+    </select>
+
+    <select id="selectCaseIdByJfuBatch" resultType="com.zjzc.manage.core.model.CaseBatchInfo">
+        SELECT b.id caseId,b.arbitration_amount amount,b.compute_price price,s.json_msg msg from
+            case_batch_info b
+            INNER JOIN case_batch_supplement s on b.id = s.case_id
+            where DATE_FORMAT(b.register_time,'%Y-%m') = '2019-04'
+    </select>
+
+    <select id="selectCasePartyListByNotCheckTop1000" resultType="com.zjzc.manage.core.model.CaseParty">
+        SELECT DISTINCT email from case_party
+          where type in (3,4,5) AND email IS NOT NULL and email != '' AND NOT EXISTS (SELECT 1 from case_email_valid where case_party.email = case_email_valid.email)
+        ORDER BY email LIMIT 1000
+    </select>
+
+    <insert id="insertCaseEmailVaild" parameterType="com.zjzc.manage.core.model.CaseParty">
+        INSERT INTO case_email_valid(email,state)
+        VALUES (#{email},#{state})
+    </insert>
+
+    <select id="selectCaseVaildByEmail" resultType="java.lang.Integer" parameterType="com.zjzc.manage.core.model.CaseParty">
+        SELECT count(1) FROM case_email_valid
+            WHERE email = #{email}
+    </select>
+
+    <update id="updateCaseEmailVaild" parameterType="com.zjzc.manage.core.model.CaseParty">
+        UPDATE case_email_valid SET state = #{state} WHERE email = #{email}
+    </update>
+</mapper>
