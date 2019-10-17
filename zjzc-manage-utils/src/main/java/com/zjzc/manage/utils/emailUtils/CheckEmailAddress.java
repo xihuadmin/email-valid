@@ -1,16 +1,20 @@
 package com.zjzc.manage.utils.emailUtils;
 
 import com.zjzc.manage.utils.exception.EmailException;
-import com.zjzc.manage.utils.exception.NetworkException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.xbill.DNS.*;
 
+import javax.net.ssl.*;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.*;
 
 /**
@@ -294,6 +298,31 @@ public class CheckEmailAddress {
     private static void socketConnect(Socket socket, String mxHost) throws EmailException {
         log.info("mxHost：{}", mxHost);
         try {
+        /*X509TrustManager x509m = new X509TrustManager() {
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain,
+                                           String authType) throws CertificateException {
+            }
+
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain,
+                                           String authType) throws CertificateException {
+            }
+        };
+        // 获取一个SSLContext实例
+        SSLContext s = SSLContext.getInstance("SSL");
+        // 初始化SSLContext实例
+        s.init(null, new TrustManager[] { x509m },
+                new java.security.SecureRandom());
+        SSLSocket sslSocket = (SSLSocket) SSLSocketFactory
+                .getDefault().createSocket(mxHost, 465);
+            //socket = sslSocket;*/
             socket.connect(new InetSocketAddress(mxHost, 25));
         } catch (IOException e) {
             log.error("【socket链接】异常:{}",e.getMessage());

@@ -1,15 +1,12 @@
 package com.zjzc.manage.api.controller;
 
-import com.zjzc.manage.core.model.EmailEntity;
-import com.zjzc.manage.utils.common.JsonEntity;
+import com.zjzc.manage.api.model.EmailEntity;
 import com.zjzc.manage.utils.common.Result;
 import com.zjzc.manage.utils.common.enums.ResponseCode;
-import com.zjzc.manage.utils.emailUtils.CheckEmail;
 import com.zjzc.manage.utils.emailUtils.CheckEmailAddress;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,28 +42,6 @@ public class SmallApiController {
         }else {
             log.info("【邮箱验证】无效:{}",email);
             return new Result(ResponseCode.INVALID,emailEntity);
-        }
-    }
-
-
-    /**
-     * 上传记录页
-     *
-     * @return
-     */
-    @GetMapping("/checkEmail2")
-    public JsonEntity checkEmail( String email) {
-        if(StringUtils.isEmpty(email)){
-            log.error("【邮箱验证】邮箱为空:{}",email);
-            return new JsonEntity("邮箱为空！","0");
-        }
-        CheckEmail ce = new CheckEmail();
-        if(ce.checkEmail(email)){
-            log.info("【邮箱验证】通过:{}",email);
-            return new JsonEntity("1","success",true);
-        }else {
-            log.info("【邮箱验证】无效:{}",email);
-            return new JsonEntity("0","error",false);
         }
     }
 }

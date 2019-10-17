@@ -1,8 +1,6 @@
 package com.zjzc.manage.api;
 
-import com.zjzc.manage.utils.others.DataUtils;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +14,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @SpringBootApplication
 @ComponentScan("com.zjzc.manage")
-@EnableAutoConfiguration
 @EnableScheduling
 @Configuration
 public class PsManageApiMain {
